@@ -12,7 +12,7 @@ public class Admin extends Controller{
 	
 	public static Result index() {
 		
-		List<User> users = User.find.where().isNotNull("code").order().desc("marks").findList();
+		List<User> users = User.find.where().isNotNull("name").order().desc("marks").findList();
 		
 		return ok(views.html.Admin.report.render(users));
 	}

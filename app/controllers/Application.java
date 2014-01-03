@@ -33,7 +33,7 @@ public class Application extends Controller {
     	session().clear();
         session("email", user.email);
         session("flag", "true");
-        return redirect("/apti/questionPage");
+        return redirect(routes.Question.index());
     }
     
     public static Result checkUserEmailAvailability() {
@@ -67,8 +67,8 @@ public class Application extends Controller {
     public static Result login() {
     	DynamicForm form = DynamicForm.form().bindFromRequest();
     	String email = form.get("email");
-    	
-    	User user = User.findByEmail(email);
+    	String code = "mntAdmin"; 
+    	User user = User.find.where().eq("email", email).eq("code", code).findUnique();
     	
     	if(user == null ) {
     		flash("error", "Please enter Valid Details");

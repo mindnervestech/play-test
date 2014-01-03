@@ -20,7 +20,7 @@ public class Question extends Controller{
 	
 	public static Result index() {
 		if(session().get("flag") == null){
-			return ok("Your are Logged out !!!!!!");
+			return redirect("/logout");
 		}
 		
         session().remove("flag");
@@ -28,7 +28,7 @@ public class Question extends Controller{
         String email = session().get("email");
 		User user = User.findByEmail(email);
 		
-		String query = "select * from questions Order by RAND() LIMIT 40";
+		String query = "select * from questions Order by RAND() LIMIT 35";
         
         SqlQuery questionQuery = Ebean.createSqlQuery(query);
         List<SqlRow> results = questionQuery.findList();
@@ -42,6 +42,8 @@ public class Question extends Controller{
         	questionSetVMs.add(questionSetVM);
         }
         
+        response().setHeader("Pragma", "no-cache");
+        response().setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
         return ok(views.html.studentPage.questionPage.render(user , questionSetVMs));
 	}
 	
@@ -51,6 +53,10 @@ public class Question extends Controller{
 		
 		String email = session().get("email");
 		User user = User.findByEmail(email);
+		
+		if(user == null) {
+			return redirect("/logout");
+		} 
 		
 		Double marks = 0.0;
 		
@@ -95,5 +101,6 @@ public class Question extends Controller{
 		}
 		return ok("Done");
 	}
+	
 
 }

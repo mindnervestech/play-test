@@ -11,7 +11,7 @@
     </span>
     
     <ul class="nav pull-right">
-      <li><button type="button" class="logout btn btn-small btn-warning">Log Out</button></li>
+      <li><button type="button" class="logout btn btn-small btn-success">End Test</button></li>
     </ul>
   </div>
 </div>
@@ -65,11 +65,14 @@
 </div>	
 }
 <script>
+
+var currenttime = 0;
+
 $(document).ready(function() {
-	var currenttime = 0;
+	
 	
 	setInterval(function(){
-	    var difference = Math.floor(60*60 - currenttime*1);
+	    var difference = Math.floor(45*60 - currenttime*1);
 	    
 	    if(difference == 0) {
 	    	window.location.href = '/logout';
