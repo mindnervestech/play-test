@@ -28,7 +28,7 @@ public class Question extends Controller{
         String email = session().get("email");
 		User user = User.findByEmail(email);
 		
-		String query = "select * from Questions Order by RAND() LIMIT 10";
+		String query = "select * from questions Order by RAND() LIMIT 40";
         
         SqlQuery questionQuery = Ebean.createSqlQuery(query);
         List<SqlRow> results = questionQuery.findList();
