@@ -28,7 +28,7 @@ public class Question extends Controller{
         String email = session().get("email");
 		User user = User.findByEmail(email);
 		
-		String query = "select * from questions Order by RAND() LIMIT 35";
+		String query = "select * from questions Order by RAND() LIMIT 40";
         
         SqlQuery questionQuery = Ebean.createSqlQuery(query);
         List<SqlRow> results = questionQuery.findList();
@@ -85,7 +85,7 @@ public class Question extends Controller{
 					marks = marks + 1.0;
 					remark = "Correct";
 				} else {
-					marks = marks - 0.25;
+					marks = marks - 0.0;
 				}
 			} 
 			
