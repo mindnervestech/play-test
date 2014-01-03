@@ -1,0 +1,28 @@
+@main("Aptitude Test") {
+
+<div class="container">
+	<div class="heading">
+	@helper.form(routes.Application.login) {
+			<br>
+			<br>
+			<br>
+			@if(flash.contains("error")) {
+            <p class="error" style="color:red;">
+               @flash.get("error")
+            </p>
+            }
+					<div class="well" style="width:26%;">
+					<div class="control-group">
+						<div class="controls">
+		                	<input type="text" id="username" name="username" placeholder="Username">
+		            	</div>
+		            </div>
+		            <p>   
+		               <button type="submit" class="btn btn-success">Login</button>
+		              </p> 
+	          </div>
+			}
+	</div>
+</div> 
+    
+}

@@ -1,0 +1,93 @@
+
+@main("Aptitude Test") {
+
+<div class="container">
+	<div class="heading">
+	@helper.form(routes.Application.createAccount, 'id -> "createForm") {
+			<br>
+			<br>
+			<br>
+					<div class="well" style="width:26%;">
+					<div class="control-group">
+						<div class="controls">
+		                	<input type="text" id="email" name="email" placeholder="Email Id">
+		            	</div>
+		            </div>
+		            <div class="control-group">
+						<div class="controls">
+		                	<input type="text" id="name" name="name" placeholder="Name">
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+		                	<input type="text" id="code" name="code" placeholder="Code">
+						</div>
+					</div>			           
+		            <p>   
+		               <button type="submit" class="btn btn-info">Start Test</button>
+		              </p> 
+	          </div>
+			}
+	</div>
+</div> 
+
+<script>
+$(document).ready(function() {
+	$("#createForm").validate({
+		rules : {
+			email : {
+				remote : {
+					url:"/checkUserEmail",
+					type : "post",
+					data : {
+						q : function(){
+							return $("#email").val(); 
+					 }
+				}
+			  }
+			},
+			name : {
+				required : true
+			},
+			code : {
+				remote : {
+					url:"/checkUserCode",
+					type : "post",
+					data : {
+						q : function(){
+							return $("#code").val(); 
+					 }
+				}
+			  }
+			}
+		},
+	
+		messages : {
+			email : {
+				remote : "Email id is used"					
+			},
+			name : {
+				required : "Enter your Name"			
+			},
+			Code : {
+				remote : "Code is used"					
+			}
+		},
+	
+		errorClass : "help-inline",
+		errorElement : "span",
+		highlight: function (element) {
+		    $(element).closest('.control-group').removeClass('success').addClass('error');
+		},
+		success: function(element) {
+		     element
+		        .addClass('valid')
+		        .closest('.control-group').removeClass('error').addClass('success');
+		}
+	});
+});
+
+
+</script>    
+    
+}

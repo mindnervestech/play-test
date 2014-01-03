@@ -1,0 +1,105 @@
+@(user : User, questions: List[viewModel.QuestionSetVM])
+@main("Aptitude Test") {
+<body ondragstart="return false" onselectstart="return false" oncontextmenu="return false">
+
+@helper.form(routes.Question.evaluate) {
+<div class="container">
+	<div class="row-fluid">
+		<button type="button" class="logout btn btn-warning" style="float: right;margin-top: 1%;margin-bottom: 1%;">Log Out</button>
+	</div>
+<div class="well">
+	@for(question <- questions){
+	<div class="well">
+		<div class="row-fluid">
+			<div class="span2">
+				Question @question.counter
+			</div>
+			<div class="span10">
+				@question.question
+			</div>
+		</div>
+		
+		@if(question.questionType == true){
+			<div class="row-fluid">
+				<div class="span6">
+					<input type="hidden" class="flag" value="false">
+					<input type="hidden" class="id" value="@question.id">
+					<input type="radio" class="submit" value="@question.option1" name="answer@question.counter">@question.option1
+				</div>
+				<div class="span6">
+					<input type="hidden" class="flag" value="false">
+					<input type="hidden" class="id" value="@question.id">
+					<input type="radio" class="submit" value="@question.option2" name="answer@question.counter">@question.option2
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span6">
+					<input type="hidden" class="flag" value="false">
+					<input type="hidden" class="id" value="@question.id">
+					<input type="radio" class="submit" value="@question.option3" name="answer@question.counter">@question.option3
+				</div>
+				<div class="span6">
+					<input type="hidden" class="flag" value="false">
+					<input type="hidden" class="id" value="@question.id">
+					<input type="radio" class="submit" value="@question.option4" name="answer@question.counter">@question.option4
+				</div>
+			</div>
+			}
+	</div>
+	
+	}
+</div>	
+</div>	
+}
+</body>
+<script>
+$(document).ready(function() {
+	
+	$(".submit").click(function(){
+		var _this = $(this).parent();
+		var flag = _this.find('.flag').val();
+		if(flag == "false") {
+			var id = _this.find('.id').val();
+			var answer = _this.find('.submit').val();
+			_this.find('.flag').val("true");
+		} else {
+			var id = _this.find('.id').val();
+			var answer = null;
+			_this.find('.flag').val("false");
+			$(this).prop('checked', false);
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "/apti/evaluation",
+			data: { id : id,
+					answer : answer
+				},
+			success: function(data){
+				console.log(data)
+			}
+		});
+		
+	});
+	
+	$(".logout").click(function(){
+		window.location.href = '/logout';
+	});
+	
+	function killCopy(e){
+	    return false
+	}
+	 
+	function reEnable(){
+	    return true
+	}
+	 
+	document.onselectstart=new Function ("return false")
+	if (window.sidebar){
+	    document.onmousedown=killCopy
+	    document.onclick=reEnable
+	}
+});
+</script>
+
+}
