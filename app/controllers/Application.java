@@ -20,6 +20,7 @@ import com.google.common.collect.Lists;
 public class Application extends Controller {
   
     public static Result index() {
+    	
         return ok(views.html.login.createAccount.render());
     }
     
@@ -30,7 +31,6 @@ public class Application extends Controller {
     	user.save();
     	
     	session().clear();
-        response().setCookie("email", user.email);
         session("email", user.email);
         session("flag", "true");
         return redirect("/apti/questionPage");
@@ -66,35 +66,27 @@ public class Application extends Controller {
     
     public static Result login() {
     	DynamicForm form = DynamicForm.form().bindFromRequest();
-    	String username = form.get("username");
+    	String email = form.get("email");
     	
-    	User user = User.find.where().eq("name", username).findUnique();
+    	User user = User.findByEmail(email);
     	
     	if(user == null ) {
     		flash("error", "Please enter Valid Details");
     		return redirect("/admin/login");
     	} else {
-    		return ok("logged in report grid");
+    		Admin.calculateMarks();
+    		return redirect("/admin/grid");
     	}
     	
     }
     
     public static Result logout() {
-    	String email = session().get("email");
-		User user = User.findByEmail(email);
-		
-    	List<Report> reports = Report.find.where().eq("users.id", user.id).findList();
-    	Double totalMarks = 0.0;
-    	for(Report report : reports) {
-    		totalMarks = totalMarks + report.marks; 
-    	}
     	
-    	user.marks = totalMarks;
-    	user.update();
-    	
-    	System.out.println("abcd");
-    	
-    	return ok();
+    	session().clear();
+        response().discardCookie("email");
+        
+    	flash("success", "You have been logged out");
+    	return redirect("/");
     }
     
   

@@ -1,0 +1,67 @@
+@(users: List[User])
+
+@main("Aptitude Test") {
+<button type="button" class="logout btn btn-small btn-warning" style="float: right;margin-top: 1%;margin-bottom: 1%;">Log Out</button>	
+	<table class="table table-striped table-bordered">
+	<thead>
+	  <tr>
+	    <th>Name</th>
+	    <th>Email</th>
+	    <th>Code</th>
+	    <th>Marks</th>
+	  </tr>
+	</thead>
+	<tbody>
+		@for(user <- users){
+		  <tr class="selected" value="@user.id">
+		    <td>@user.name</td>
+		    <td>@user.email</td>
+		    <td>@user.code</td>
+		    <td>@user.marks</td>
+		  </tr>
+		}  
+	</tbody>
+</table>
+
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title">Report Card</h3>
+      </div>
+      <div class="modal-body">
+       	<div id="reportPage"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+$(document).ready(function(){
+	
+	$('.selected').click(function(){
+		var id = $(this).attr("value");
+
+		$.ajax({
+			type: "POST",
+			url: " /admin/report",
+			data: { id : id },
+			success: function(data){
+				$("#reportPage").empty();
+            	$("#reportPage").append(data);
+				$('#reportModal').modal('show');
+			}
+		}); 
+		
+	});
+	$(".logout").click(function(){
+		window.location.href = '/admin/logout';
+	});
+	
+});
+</script>
+}

@@ -1,25 +1,35 @@
 
 @main("Aptitude Test") {
-
+<section id="backgroundImage">
 <div class="container">
 	<div class="heading">
+	<img src="@routes.Assets.at("images/logo.png")"></img>
 	@helper.form(routes.Application.createAccount, 'id -> "createForm") {
 			<br>
 			<br>
 			<br>
-					<div class="well" style="width:26%;">
+			@if(flash.contains("success")) {
+            <p class="success" style="color:green;">
+               @flash.get("success")
+            </p>
+            }
+            <div class="span7">
+					<div class="well">
 					<div class="control-group">
 						<div class="controls">
-		                	<input type="text" id="email" name="email" placeholder="Email Id">
+							<label class="span1">Email ID</label>						
+		                	<input type="text" class="span3" id="email" name="email" placeholder="Email Id">
 		            	</div>
 		            </div>
 		            <div class="control-group">
 						<div class="controls">
+							<label class="span1">Name</label>
 		                	<input type="text" id="name" name="name" placeholder="Name">
 						</div>
 					</div>
 					<div class="control-group">
 						<div class="controls">
+							<label class="span1">Code</label>
 		                	<input type="text" id="code" name="code" placeholder="Code">
 						</div>
 					</div>			           
@@ -27,15 +37,17 @@
 		               <button type="submit" class="btn btn-info">Start Test</button>
 		              </p> 
 	          </div>
+	         </div> 
 			}
 	</div>
 </div> 
-
+</section>
 <script>
 $(document).ready(function() {
 	$("#createForm").validate({
 		rules : {
 			email : {
+				required : true,
 				remote : {
 					url:"/checkUserEmail",
 					type : "post",
@@ -50,6 +62,7 @@ $(document).ready(function() {
 				required : true
 			},
 			code : {
+				required : true,
 				remote : {
 					url:"/checkUserCode",
 					type : "post",
@@ -87,7 +100,15 @@ $(document).ready(function() {
 	});
 });
 
-
 </script>    
+<style>
+ #backgroundImage{
+       background: url("/assets/images/light.jpg") !important;
+       height: 1000px;
+}
+body{
+	margin: 0% !important;
+}
+</style>
     
 }

@@ -10,7 +10,6 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import viewModel.QuestionSetVM;
-import viewModel.StudentAnswerVM;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.SqlQuery;
@@ -20,11 +19,11 @@ import com.google.common.collect.Lists;
 public class Question extends Controller{
 	
 	public static Result index() {
-		/*if(session().get("flag") == null){
+		if(session().get("flag") == null){
 			return ok("Your are Logged out !!!!!!");
 		}
 		
-        session().remove("flag");*/
+        session().remove("flag");
        
         String email = session().get("email");
 		User user = User.findByEmail(email);
@@ -47,9 +46,6 @@ public class Question extends Controller{
 	}
 	
 	public static Result evaluate() {
-		if(session().get("flag") == null){
-			return ok("Your are Logged out !!!!!!");
-		}
 		
 		DynamicForm form = DynamicForm.form().bindFromRequest();
 		

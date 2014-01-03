@@ -1,7 +1,8 @@
 @main("Aptitude Test") {
-
+<section id="backgroundImage">
 <div class="container">
 	<div class="heading">
+	<img src="@routes.Assets.at("images/logo.png")"></img>
 	@helper.form(routes.Application.login) {
 			<br>
 			<br>
@@ -11,10 +12,15 @@
                @flash.get("error")
             </p>
             }
+            @if(flash.contains("success")) {
+            <p class="success" style="color:green;">
+               @flash.get("success")
+            </p>
+            }
 					<div class="well" style="width:26%;">
 					<div class="control-group">
 						<div class="controls">
-		                	<input type="text" id="username" name="username" placeholder="Username">
+		                	<input type="text" id="email" name="email" placeholder="Email">
 		            	</div>
 		            </div>
 		            <p>   
@@ -24,5 +30,15 @@
 			}
 	</div>
 </div> 
+</section>
+<style>
+ #backgroundImage{
+       background: url("/assets/images/light.jpg") !important;
+       height: 1000px;
+}
+body{
+	margin: 0% !important;
+}
+</style>
     
 }

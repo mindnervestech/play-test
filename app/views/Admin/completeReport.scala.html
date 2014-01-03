@@ -1,0 +1,21 @@
+@(reports: List[Report])
+<table class="table table-bordered">
+	<thead>
+	  <tr>
+	    <th>Question</th>
+	    <th>Answered</th>
+	    <th>Correct</th>
+	    <th>Remark</th>
+	  </tr>
+	</thead>
+	<tbody>
+		@for(report <- reports){
+		  <tr>
+		    <td>@report.question.question</td>
+		    <td>@report.answer</td>
+		    <td>@report.question.correctAnswer</td>
+		    <td>@report.remark</td>
+		  </tr>
+		}  
+	</tbody>
+</table>
