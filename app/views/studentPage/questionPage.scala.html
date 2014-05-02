@@ -26,7 +26,7 @@
 				<b>Question @question.counter :</b>
 			</div>
 			<div class="span10">
-				@question.question
+				@question.question &nbsp;&nbsp; (@question.marks)
 			</div>
 		</div>
 		
@@ -72,7 +72,7 @@ $(document).ready(function() {
 	
 	
 	setInterval(function(){
-	    var difference = Math.floor(45*60 - currenttime*1);
+	    var difference = Math.floor(55*60 - currenttime*1);
 	    
 	    if(difference == 0) {
 	    	window.location.href = '/logout';

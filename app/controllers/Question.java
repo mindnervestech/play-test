@@ -38,7 +38,8 @@ public class Question extends Controller{
         
         for(SqlRow row : results) {
         	QuestionSetVM questionSetVM = new QuestionSetVM(counter++,row.getString("id"), row.getString("question"), row.getString("option1"), 
-        			row.getString("option2"), row.getString("option3"), row.getString("option4"), row.getString("question_type"));
+        			row.getString("option2"), row.getString("option3"), row.getString("option4"), row.getString("question_type"),
+        			String.valueOf(row.getDouble("marks")));
         	questionSetVMs.add(questionSetVM);
         }
         
@@ -73,16 +74,7 @@ public class Question extends Controller{
 		} else {
 			if(question.questionType.equals("obj")) {
 				if(question.correctAnswer.equals(answer)) {
-					marks = marks + 1.0;
-					remark = "Correct";
-				} else if(question.correctAnswer.equals(answer)) {
-					marks = marks + 1.0;
-					remark = "Correct";
-				} else if(question.correctAnswer.equals(answer)) {
-					marks = marks + 1.0;
-					remark = "Correct";
-				} else if(question.correctAnswer.equals(answer)) {
-					marks = marks + 1.0;
+					marks = marks + question.marks;
 					remark = "Correct";
 				} else {
 					marks = marks - 0.0;

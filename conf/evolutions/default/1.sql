@@ -12,6 +12,7 @@ create table questions (
   option4                   varchar(255),
   correct_answer            varchar(255),
   question_type             varchar(255),
+  marks                     double
   constraint pk_questions primary key (id))
 ;
 
