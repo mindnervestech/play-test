@@ -1,21 +1,11 @@
 package controllers;
 
 
-import java.util.List;
-
-import models.Questions;
-import models.Report;
 import models.User;
 import play.data.DynamicForm;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import viewModel.QuestionSetVM;
-
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.SqlQuery;
-import com.avaje.ebean.SqlRow;
-import com.google.common.collect.Lists;
 
 public class Application extends Controller {
   
@@ -27,7 +17,22 @@ public class Application extends Controller {
     public static Result createAccount(){
     	DynamicForm form = DynamicForm.form().bindFromRequest();
     	
-    	User user = new User(form.get("email"),form.get("name"),form.get("code"));
+    	try {
+	    	User u = User.find.where().eq("email", form.get("email")).findUnique();
+	    	if(u != null && u.passed == 1) {
+	    		session().clear();
+	            session("email", u.email);
+	            session("flag", "true");
+	    		return redirect(routes.Question.subQuestionIndex()); //TODO
+	    	}
+    	} catch (Exception e) {
+    		return index();
+    	}
+    	
+    	User user = new User(form.get("email"),
+    						form.get("name"),
+    						form.get("phone"),
+    						form.get("code"));
     	user.save();
     	
     	session().clear();
@@ -44,8 +49,11 @@ public class Application extends Controller {
 		if(user == null){
 			return ok(Json.toJson(true));
 		}
-		else
+		else if (user.passed == 1){
+			return ok(Json.toJson(true));
+		} else {
 			return ok(Json.toJson("Email ID is in use"));
+		}
     }
     
     public static Result checkUserCode() {
@@ -56,8 +64,11 @@ public class Application extends Controller {
 		if(user == null){
 			return ok(Json.toJson(true));
 		}
-		else
+		else if (user.passed == 1) {
+			return ok(Json.toJson(true));
+		} else {
 			return ok(Json.toJson("Code is in use"));
+		}
     }
     
     public static Result adminLogin() {

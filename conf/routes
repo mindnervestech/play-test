@@ -13,14 +13,18 @@ POST	/checkUserCode				controllers.Application.checkUserCode()
 
 # Question Page
 GET     /apti/questionPage          controllers.Question.index()
+GET     /apti/subquestionPage       controllers.Question.subQuestionIndex()
 POST    /apti/evaluation            controllers.Question.evaluate()
+POST    /apti/evaluationSub         controllers.Question.subEvaluate()
 
 # Admin 
 POST    /admin/authenticate         controllers.Application.login()
 GET     /logout          			controllers.Application.logout()
 GET     /admin/logout      			controllers.Admin.logout()
 GET     /admin/grid			        controllers.Admin.index()
-POST    /admin/report		        controllers.Admin.report()
-
+POST    /admin/report		              controllers.Admin.report()
+GET     /admin/viewsubjective/:email      controllers.Admin.viewsubjective(email:String)
+GET     /admin/viewsubjectivebyid/:id     controllers.Admin.viewsubjectivebyid(id:Long)
+GET     /admin/viewsubjectivebycode/:code controllers.Admin.viewsubjectivebyCode(code:String)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

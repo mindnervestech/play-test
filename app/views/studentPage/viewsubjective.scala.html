@@ -1,0 +1,61 @@
+@(user : User, rs: List[models.SubReport])
+@main("Aptitude Test") {
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+  	<span class="brand span3">@user.name </span>
+    <span class="brand span3">
+    	<span id="hours">@user.email</span>
+		<span id="minutes">@user.code</span>
+		<span id="seconds">@user.phone</span>
+    </span>
+    
+    
+  </div>
+</div>
+
+<div class="container">
+<div class="well">
+	@for(r <- rs){
+	<div class="well">
+		<div class="row-fluid">
+			<div class="span2">
+				<b>Question @r.question </b>
+			</div>
+			<div class="span10">
+			</div>
+		</div>
+		
+		
+			<div class="row-fluid">
+					<div id="jqtext_@r.id">@Html(r.answer)</div>
+			</div>
+			<div class="row-fluid">
+					<textarea name="remark" class="span10" rows="" cols=""></textarea>
+					<input name="marks" placeholder="marks" type="text" />
+					<button type="button" class="submit btn">Submit</button>
+			</div>
+			
+			
+	</div>
+	
+	}
+</div>	
+</div>	
+}
+<script>
+
+
+$(document).ready(function() {
+	@for(r <- rs){
+		$("#jqtext_@r.id").jqte();
+		//$("#jqtext_@r.id").jqteVal("");
+	}
+	
+	$(".submit").click(function(){
+		
+	});
+	    
+});
+</script>
+

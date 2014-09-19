@@ -3,8 +3,8 @@ package controllers;
 import java.util.List;
 
 import models.Report;
+import models.SubReport;
 import models.User;
-import play.data.DynamicForm;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -43,5 +43,29 @@ public class Admin extends Controller{
     	user.update();
 		}
 		
+	}
+	
+	public static Result viewsubjective(String email) {
+    	
+	    User u = User.find.where().ieq("email", email).findUnique();
+	    List<SubReport> reports = SubReport.find.where().eq("users", u).findList();
+		
+		return ok(views.html.studentPage.viewsubjective.render(u , reports));
+	}
+	
+	public static Result viewsubjectivebyCode(String code) {
+    	
+	    User u = User.find.where().ieq("code", code).findUnique();
+	    List<SubReport> reports = SubReport.find.where().eq("users", u).findList();
+		
+		return ok(views.html.studentPage.viewsubjective.render(u , reports));
+	}
+	
+	public static Result viewsubjectivebyid(Long id) {
+    	
+	    User u = User.find.where().eq("id", id).findUnique();
+	    List<SubReport> reports = SubReport.find.where().eq("users", u).findList();
+		
+		return ok(views.html.studentPage.viewsubjective.render(u , reports));
 	}
 }

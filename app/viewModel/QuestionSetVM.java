@@ -32,5 +32,12 @@ public class QuestionSetVM {
 		}
 	}
 
+	public QuestionSetVM(int counter, String id, String question, String marks) {
+		this.id = Long.parseLong(id);
+		this.counter = counter;
+		this.question = question;
+		this.marks = marks;
+	}
+
 	
 }

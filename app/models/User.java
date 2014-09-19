@@ -1,12 +1,12 @@
 package models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
 
 import play.db.ebean.Model;
 
@@ -28,13 +28,19 @@ public class User extends Model{
 	@OneToMany
 	public List<Report> reports ;
 	
+	public Date loginTime = new Date();
+	
+	public int passed = 0;
+	public String phone ;
+	
 
 	public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
 
-	public User(String email, String name, String code) {
+	public User(String email, String name,String phone, String code) {
 		this.email = email;
 		this.name = name;
 		this.code = code;
+		this.phone = phone;
 		this.marks = 0.0;
 	}
 	

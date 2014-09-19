@@ -104,27 +104,31 @@ $(document).ready(function() {
 	$(".submit").click(function(){
 		var _this = $(this).parent();
 		var flag = _this.find('.flag').val();
-		if(flag == "false") {
+		//if(flag == "false") {
 			var id = _this.find('.id').val();
 			var answer = _this.find('.submit').val();
-			_this.find('.flag').val("true");
-		} else {
+			//_this.find('.flag').val("true");
+			$.ajax({
+				type: "POST",
+				url: "/apti/evaluation",
+				data: { id : id,
+						answer : answer
+					},
+				success: function(data){
+					//console.log(data)
+				},
+				error: function() {
+					$(this).prop('checked', false);
+				}
+			});
+		/* } else {
 			var id = _this.find('.id').val();
 			var answer = null;
 			_this.find('.flag').val("false");
 			$(this).prop('checked', false);
-		}
+		} */
 		
-		$.ajax({
-			type: "POST",
-			url: "/apti/evaluation",
-			data: { id : id,
-					answer : answer
-				},
-			success: function(data){
-				console.log(data)
-			}
-		});
+		
 		
 	});
 	

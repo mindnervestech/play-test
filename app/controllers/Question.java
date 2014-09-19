@@ -1,12 +1,13 @@
 package controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import models.Questions;
 import models.Report;
+import models.SubReport;
 import models.User;
 import play.data.DynamicForm;
-import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import viewModel.QuestionSetVM;
@@ -28,7 +29,7 @@ public class Question extends Controller{
         String email = session().get("email");
 		User user = User.findByEmail(email);
 		
-		String query = "select * from questions Order by RAND() LIMIT 40";
+		String query = "select * from questions where status=1 Order by RAND() LIMIT 40";
         
         SqlQuery questionQuery = Ebean.createSqlQuery(query);
         List<SqlRow> results = questionQuery.findList();
@@ -46,6 +47,36 @@ public class Question extends Controller{
         response().setHeader("Pragma", "no-cache");
         response().setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
         return ok(views.html.studentPage.questionPage.render(user , questionSetVMs));
+	}
+	
+	public static Result subQuestionIndex() {
+		if(session().get("flag") == null){
+			return redirect("/logout");
+		}
+		
+        session().remove("flag");
+       
+        String email = session().get("email");
+		User user = User.findByEmail(email);
+		
+		String query = "select * from subquestions where status=1 Order by RAND() LIMIT 5";
+        
+        SqlQuery questionQuery = Ebean.createSqlQuery(query);
+        List<SqlRow> results = questionQuery.findList();
+        
+        List<QuestionSetVM> questionSetVMs = Lists.newArrayList();
+        int counter = 1;
+        
+        for(SqlRow row : results) {
+        	QuestionSetVM questionSetVM = new QuestionSetVM(counter++,
+        			row.getString("id"), row.getString("question"),
+        			String.valueOf(row.getDouble("marks")));
+        	questionSetVMs.add(questionSetVM);
+        }
+        
+        response().setHeader("Pragma", "no-cache");
+        response().setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
+        return ok(views.html.studentPage.subjectiveQuestionPage.render(user , questionSetVMs));
 	}
 	
 	public static Result evaluate() {
@@ -88,6 +119,41 @@ public class Question extends Controller{
 				report.marks = marks;
 				report.answer = answer;
 				report.remark = remark;
+				report.lastUpdated = new Date();
+				report.update();
+			}
+		}
+		return ok("Done");
+	}
+	
+	public static Result subEvaluate() {
+		
+		DynamicForm form = DynamicForm.form().bindFromRequest();
+		
+		String email = session().get("email");
+		User user = User.findByEmail(email);
+		
+		if(user == null) {
+			return redirect("/logout");
+		} 
+		
+		String id = form.get("id");
+		String answer = form.get("answer");
+		
+		SubReport report = SubReport.find.where()
+				.eq("users.id", user.id).
+				eq("question", id).findUnique();
+
+		if(answer == "") {
+			//Report.find.ref(report.id).delete();
+		} else {
+			
+			if(report == null) {
+				SubReport reportObj = new SubReport(user, id, answer);
+				reportObj.save();
+			} else {
+				report.answer = answer;
+				report.lastUpdated = new Date();
 				report.update();
 			}
 		}

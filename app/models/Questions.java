@@ -24,5 +24,7 @@ public class Questions extends Model{
 	
 	public float marks;
 	
+	public int  status;
+	
 	public static Finder<Long, Questions> find = new Finder<Long, Questions>(Long.class, Questions.class);
 }
