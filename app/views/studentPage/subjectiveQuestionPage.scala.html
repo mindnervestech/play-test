@@ -26,13 +26,13 @@
 				<b>Question @question.counter :</b>
 			</div>
 			<div class="span10">
-				@question.question &nbsp;&nbsp; (@question.marks)
+				@Html(question.question) &nbsp;&nbsp; (@question.marks)
 			</div>
 		</div>
 		
 		
 			<div class="row-fluid">
-					<div class="jqtext" id="jqtext_@question.id"></div>
+					<div class="jqtext" id="jqtext_@question.id">@Html(question.question)</div>
 					<input type="hidden" class="id" value="@question.id"/>
 					<button type="button" class="btn btn-success submit">Submit</button>
 			</div>
@@ -51,7 +51,7 @@ var currenttime = 0;
 $(document).ready(function() {
 	@for(question <- questions){
 		$("#jqtext_@question.id").jqte();
-		$("#jqtext_@question.id").jqteVal("Q: <lable>@question.question</lable> (Do not remove line) </br> Answer:");
+		//$("#jqtext_@question.id").jqteVal("");
 	}
 	$(".jqte_editor").bind("paste", function () {
         return false;
