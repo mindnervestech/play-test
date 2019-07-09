@@ -17,7 +17,7 @@
            <div class="row-fluid"> 
             <div class="span7">
 					<div class="well">
-					All fields are mandatory
+					<strong>All fields are mandatory to fill.</strong>
 					<div class="control-group">
 						<div class="controls">
 							<label class="span5">Email ID</label>						
@@ -36,6 +36,13 @@
 		                	<input type="text" id="phone" name="phone" placeholder="Phone">
 						</div>
 					</div>
+					
+					<div class="control-group">
+						<div class="controls">
+							<label class="span5">Examination Code</label>
+		                	<input type="text" id="code" name="code" placeholder="Code">
+						</div>
+					</div>	
 					
 					<div class="control-group">
 						<div class="controls">
@@ -108,12 +115,7 @@
 						</div>
 					</div>
 					
-					<div class="control-group">
-						<div class="controls">
-							<label class="span5">Examination Code</label>
-		                	<input type="text" id="code" name="code" placeholder="Code">
-						</div>
-					</div>			           
+							           
 		            <p>   
 		               <button type="submit" class="btn btn-info">Start Test</button>
 		              </p> 
@@ -123,8 +125,8 @@
 	         	<div class="well">
 	         		<div class="row-fluid">
 	         				<p> * All fields are mandatory to fill on form left side</p>
-	         		 		<p> * Total No of Questions : 30-40</p>
-	         		 		<p> * No of Programming Question        : 10</p>
+	         		 		<p> * Total No of Questions : 35-40</p>
+	         		 		<p> * No of Programming Question        : 10-15</p>
 	         		 		<p> * Duration        : 70 minutes</p>
 	         		 		
 	         		</div>

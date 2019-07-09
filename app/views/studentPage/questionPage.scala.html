@@ -25,13 +25,15 @@
 			@if(question.questionType == true){
 			<div class="span2">
 				<b>Question @question.counter :</b>
+				<br/>
+				@if(question.questionType == true){
+					(@question.marks)
+				}
 			</div>
 			}
 			<div class="span10">
 				@Html(question.question) &nbsp;&nbsp; 
-				@if(question.questionType == true){
-					(@question.marks)
-				}
+				<br/>
 			</div>
 		</div>
 		
