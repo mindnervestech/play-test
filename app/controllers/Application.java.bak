@@ -33,16 +33,6 @@ public class Application extends Controller {
     						form.get("name"),
     						form.get("phone"),
     						form.get("code"));
-    	user.gender = form.get("gender");
-    	user.degree = form.get("degree");
-	user.passout = form.get("passout");
-	user.college = form.get("college");
-	user.cgpa = form.get("cgpa");
-	user.hscboard = form.get("hscboard");
-	user.sscboard = form.get("sscboard");
-	user.hscpercent = form.get("hscpercent");
-	user.sscpercent = form.get("sscpercent");
-	user.nativetown = form.get("nativetown");
     	user.save();
     	
     	session().clear();

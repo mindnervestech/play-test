@@ -33,6 +33,17 @@ public class User extends Model{
 	public int passed = 0;
 	public String phone ;
 	
+	public String gender;
+	public String degree;
+	public String passout;
+	public String college;
+	public String cgpa;
+	public String hscboard;
+	public String sscboard;
+	public String hscpercent;
+	public String sscpercent;
+	public String nativetown;
+	
 
 	public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
 
