@@ -22,11 +22,16 @@
 	@for(question <- questions){
 	<div class="well">
 		<div class="row-fluid">
+			@if(question.questionType == true){
 			<div class="span2">
 				<b>Question @question.counter :</b>
 			</div>
+			}
 			<div class="span10">
-				@Html(question.question) &nbsp;&nbsp; (@question.marks)
+				@Html(question.question) &nbsp;&nbsp; 
+				@if(question.questionType == true){
+					(@question.marks)
+				}
 			</div>
 		</div>
 		
