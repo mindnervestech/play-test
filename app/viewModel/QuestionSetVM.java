@@ -12,7 +12,7 @@ public class QuestionSetVM {
 	public String option3;
 	public String option4;
 	
-	public boolean questionType;
+	public String questionType;
 	
 	public QuestionSetVM(int counter,String id, String question, String option1,
 			String option2, String option3, String option4, String questionType, String marks) {
@@ -25,11 +25,8 @@ public class QuestionSetVM {
 		this.option3 = option3;
 		this.option4 = option4;
 		this.marks = marks;
-		if(questionType.equals("obj")) {
-			this.questionType = true;
-		} else {
-			this.questionType = false;
-		}
+		this.questionType = questionType;
+		
 	}
 
 	public QuestionSetVM(int counter, String id, String question, String marks) {

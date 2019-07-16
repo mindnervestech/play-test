@@ -43,6 +43,7 @@ public class User extends Model{
 	public String hscpercent;
 	public String sscpercent;
 	public String nativetown;
+	public String level;
 	
 
 	public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);

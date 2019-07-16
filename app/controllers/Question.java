@@ -21,7 +21,7 @@ public class Question extends Controller{
 	
 	public static Result index() {
 		if(session().get("flag") == null){
-			return redirect("/logout");
+			 // return redirect("/logout");
 		}
 		
         session().remove("flag");
@@ -29,7 +29,7 @@ public class Question extends Controller{
         String email = session().get("email");
 		User user = User.findByEmail(email);
 		
-		String query = "select * from questions q where status=1 Order by category, RAND() LIMIT 40";
+		String query = "select * from questions q where status=1 and level like  '%" + user.level + "%' Order by category, RAND() LIMIT 40";
         
         SqlQuery questionQuery = Ebean.createSqlQuery(query);
         List<SqlRow> results = questionQuery.findList();
@@ -110,7 +110,9 @@ public class Question extends Controller{
 				} else {
 					marks = marks - 0.0;
 				}
-			} 
+			} else {
+				remark = "subjective";
+			}
 			
 			if(report == null) {
 				Report reportObj = new Report(user, question, answer, remark, marks);

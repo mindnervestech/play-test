@@ -18,6 +18,7 @@ POST    /apti/evaluation            controllers.Question.evaluate()
 POST    /apti/evaluationSub         controllers.Question.subEvaluate()
 
 # Admin 
+GET     /admin/mntreport/:id      controllers.Application.seeReport(id:Long)
 POST    /admin/authenticate         controllers.Application.login()
 GET     /logout          			controllers.Application.logout()
 GET     /admin/logout      			controllers.Admin.logout()

@@ -6,6 +6,8 @@ import play.data.DynamicForm;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import models.Report;
+import java.util.List;
 
 public class Application extends Controller {
   
@@ -43,10 +45,12 @@ public class Application extends Controller {
 	user.hscpercent = form.get("hscpercent");
 	user.sscpercent = form.get("sscpercent");
 	user.nativetown = form.get("nativetown");
+    	user.level = form.get("level") == null || "".equals(form.get("level"))? "fresher" : form.get("level");
     	user.save();
     	
     	session().clear();
         session("email", user.email);
+        session("level", user.email);
         session("flag", "true");
         return redirect(routes.Question.index());
     }
@@ -95,9 +99,17 @@ public class Application extends Controller {
     		flash("error", "Please enter Valid Details");
     		return redirect("/admin/login");
     	} else {
-    		Admin.calculateMarks();
-    		return redirect("/admin/grid");
+    		List<Report> reports = Report.find.where().eq("users.id", form.get("userId")).findList();
+    		
+    		return ok(views.html.Admin.report.render(reports));
     	}
+    	
+    }
+    
+    public static Result seeReport(Long id) {
+    	DynamicForm form = DynamicForm.form().bindFromRequest();
+    	List<Report> reports = Report.find.where().eq("users.id", id).findList();
+    	return ok(views.html.Admin.report.render(reports));
     	
     }
     

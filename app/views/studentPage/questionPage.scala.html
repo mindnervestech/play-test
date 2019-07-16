@@ -22,22 +22,25 @@
 	@for(question <- questions){
 	<div class="well">
 		<div class="row-fluid">
-			@if(question.questionType == true){
-			<div class="span2">
+			@if(!question.questionType.equals("dum")){
+			<div class="span10">
 				<b>Question @question.counter :</b>
-				<br/>
-				@if(question.questionType == true){
-					(@question.marks)
-				}
+				@Html(question.question) &nbsp;&nbsp; 
+				Points: (@question.marks)
+				</br>
+				
 			</div>
 			}
+			
+			@if(question.questionType == "dum"){
 			<div class="span10">
-				@Html(question.question) &nbsp;&nbsp; 
+				@Html(question.question) &nbsp;&nbsp;  
 				<br/>
 			</div>
+			}
 		</div>
 		
-		@if(question.questionType == true){
+		@if(question.questionType == "obj"){
 			<div class="row-fluid">
 					<div class="span2"></div>
 					<div class="span5">
@@ -65,6 +68,17 @@
 				</div>
 			</div>
 			}
+		@if(question.questionType == "sub"){
+		   <div class="row-fluid">
+		         <b>Write your answer in below editor</b>
+		         </br>
+		   	<i>(To <b>save and submit</b> your changes, in the editor below press (control key and s ) <b>ctrl + s</b>. You can save as many time in the editor.) </i>
+		   	<div class="span10">
+			   <div class="code-editor" id="@question.id"></div>
+			</div>
+		   </div>
+		}	
+			
 	</div>
 	
 	}
@@ -77,6 +91,21 @@ var currenttime = 0;
 
 $(document).ready(function() {
 	
+        $(".code-editor").toArray().forEach(element => {
+		var editor = ace
+		.edit($(element).attr("id"),{ maxLines: 30,autoScrollEditorIntoView: true, mode:"ace/mode/c_cpp",wrap: true});
+		
+		editor.commands.
+		addCommand({
+			 name: 'Save',
+    			 bindKey: {win: 'Ctrl-s',  mac: 'Command-s'},
+			 exec: function(editor) {
+			 
+			  save(editor.container.id,editor.getValue());
+			}
+		});
+	}); 
+
 	
 	setInterval(function(){
 	    var difference = Math.floor(70*60 - currenttime*1);
@@ -109,13 +138,12 @@ $(document).ready(function() {
 	}
 	
 	$(".submit").click(function(){
-		var _this = $(this).parent();
-		var flag = _this.find('.flag').val();
-		//if(flag == "false") {
+			var _this = $(this).parent();
+		
 			var id = _this.find('.id').val();
 			var answer = _this.find('.submit').val();
-			//_this.find('.flag').val("true");
-			$.ajax({
+			save(id,answer);
+			/*$.ajax({
 				type: "POST",
 				url: "/apti/evaluation",
 				data: { id : id,
@@ -127,17 +155,24 @@ $(document).ready(function() {
 				error: function() {
 					$(this).prop('checked', false);
 				}
-			});
-		/* } else {
-			var id = _this.find('.id').val();
-			var answer = null;
-			_this.find('.flag').val("false");
-			$(this).prop('checked', false);
-		} */
+			});*/
+		
 		
 		
 		
 	});
+	
+	function save (id,answer) {
+		$.ajax({
+				type: "POST",
+				url: "/apti/evaluation",
+				data: { id : id,
+						answer : answer
+					}
+				
+			});
+	
+	}
 	
 	$(".logout").click(function(){
 		window.location.href = '/logout';
