@@ -21,7 +21,7 @@ public class Question extends Controller{
 	
 	public static Result index() {
 		if(session().get("flag") == null){
-			 // return redirect("/logout");
+			  return redirect("/logout");
 		}
 		
         session().remove("flag");
